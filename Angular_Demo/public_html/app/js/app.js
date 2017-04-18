@@ -1,4 +1,4 @@
-var routerApp = angular.module('routerApp', ['ui.router', 'ngMessages', 'ui.grid']);
+var routerApp = angular.module('routerApp', ['ui.router', 'ngMessages', 'ui.grid', 'allCtrl']);
 
 routerApp.config(function($stateProvider, $urlRouterProvider) {
     
@@ -15,9 +15,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
     .state('home.list', {
         url: '/list',
         templateUrl: 'partials/Home-List.html',
-        controller: function($scope) {
-            $scope.cars = ['Audi', 'Honda', 'Jaguar'];
-        }
+        controller: 'CtrlA'
     })
      .state('home.search', {
             url: '/searchresult',
@@ -29,28 +27,43 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         url: '/grid',
         templateUrl: 'partials/AngularGrid.html',
          controller: function($scope) {
-             $scope.myData = [
+              $scope.myData = [
     {
         "firstName": "Gagandeep",
         "lastName": "Kaur",
         "company": "Infosys",
-        "employed": true
+        "startDate": 1288323623006
     },
     {
         "firstName": "Pretty",
         "lastName": "Singla",
         "company": "Infosys",
-        "employed": false
+         "startDate": 1088329723606
+
     },
     {
         "firstName": "Nancy",
         "lastName": "Waters",
         "company": "XYZ",
-        "employed": false
+             "startDate": 1148393729006
+
     }
 ];
+             $scope.gridOptions = {
+                 data: $scope.myData,
+
+             
+                 columnDefs: [
+{ field: 'firstName', displayName: 'First Name'},
+{ field: 'lastName', displayName: 'Last Name'},
+{ field: 'company', displayName: 'Organization'},
+{field: 'startDate', displayName: 'Date of Joining',type: 'date', cellFilter: 'date:\'yyyy-MM-dd\'' }
+                     ]
+            
          }
-    })
+     }
+ })
+    
         // ABOUT PAGE AND MULTIPLE NAMED VIEWS =================================
         .state('about', {
         url: '/about',
@@ -60,7 +73,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             '': { templateUrl: 'partials/About.html' },
 
             // the child views will be defined here (absolutely named)
-            'columnOne@about': { template: 'This is Column1' },
+            'columnOne@about': { template: 'This is Column1 Content  TBD' , 
+            controller: 'bookController'},
 
             // for column two, we'll define a separate controller 
             'columnTwo@about': { 
@@ -73,6 +87,15 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
      .state('contact', {
             url: '/contact',
             templateUrl: 'partials/Contact.html'
+        })
+          .state('search', {
+            url: '/search',
+            templateUrl: 'partials/Search-Results.html'
+        })
+        .state('congrats', {
+            url: '/congrats',
+            templateUrl: 'partials/Congrats.html',
+            
         })
 
 }); // closes $routerApp.config()
@@ -97,5 +120,30 @@ routerApp.controller('bookController', function($scope) {
             price: 20
         }
     ];
+    $scope.getMessage = function() {
+ 
+    setTimeout(function() {
+          $scope.$apply(function() {
+            //wrapped this within $apply
+                $scope.message = 'Your session is about to expire in 1 mintue';
+
+           alert( $scope.message);
+          });
+        }, 2000);
+      }
+      
+$scope.getMessage();
     
+});
+routerApp.controller('dataController', function($scope, $http) {
+    
+   routerApp.controller('bookController', function($scope) {
+    
+ $http.get("data/country.json")
+    .then(function(response) {
+        $scope.res = response.data;
+alert(res);
+    });
+    
+});
 });

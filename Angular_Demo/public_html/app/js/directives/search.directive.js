@@ -9,8 +9,8 @@ routerApp.directive('search', function($state) {
        
        $scope.goSearch = function()
       {
-           
-          alert('You searched for' +" " +$scope.query);
+           $state.go('search');
+         
       }; 
     }
     }

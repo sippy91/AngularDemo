@@ -1,3 +1,10 @@
-<ul>
-    <li ng-repeat="car in cars">{{ car }}</li>
-</ul>
+<div ng-controller="CtrlA">
+    <p><b>List of available cars</b></p>
+    <p>(This is parent controller scope. Broadcasting selected car through scope hierarchy)</p>
+
+   <div ng-repeat="car in cars"> <input id={{$index}} type="radio" ng-click="selectCar($index)">{{ car }}</div>
+<br/><br/>
+<div ng-controller="CtrlB"><p>(This is child controller scope)</p>
+    <b> Nice Choice !! You have selected {{selectedCar}}</b>
+    </div>
+</div>

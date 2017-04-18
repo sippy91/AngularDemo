@@ -5,7 +5,7 @@
         <!-- name field -->
         <div class="form-group" ng-class="{ 'has-error': userForm.name.$touched && userForm.name.$invalid }">
             <label>Name</label>
-            <input type="text" name="name" class="form-control" 
+            <input style="width:300px" type="text" name="name" class="form-control" 
                 ng-model="main.name"
                 ng-minlength="5"
                 ng-maxlength="10"
@@ -20,7 +20,7 @@
         <!-- email field -->
        <div class="form-group" ng-class="{ 'has-error': userForm.email.$touched && userForm.email.$invalid }">    
             <label>Email</label>
-            <input type="email" name="email" class="form-control" 
+            <input style="width:300px;" type="email" name="email" class="form-control" 
                 ng-model="main.email"
                 ng-minlength="5"
                 ng-maxlength="20"
@@ -30,7 +30,16 @@
 </div>   
             <!-- ngMessages goes here -->
         </div>
-        
+           <div class="form-group" ng-class="{ 'has-error': userForm.query.$touched && userForm.query.$invalid }">    
+            <label>Your Query</label>
+            <textarea style="width:300px;" type="email" name="query" class="form-control" 
+                ng-model="main.query"         
+                required></textarea>
+             <div class="help-block" ng-messages="userForm.query.$error" ng-show="userForm.query.$touched">
+    <div ng-messages-include="partials/messages.html"></div>
+</div>   
+            <!-- ngMessages goes here -->
+        </div>
         <div class="form-group">
             <button type="submit" class="btn btn-danger">Submit</button>
         </div>
